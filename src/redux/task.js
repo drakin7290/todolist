@@ -1,11 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getObjData, storeObjData } from "~/utils/storage";
+import { storeObjData } from "~/utils/storage";
 export const taskSlice = createSlice({
   name: "task",
-  initialState: getObjData("taskState", {
+  initialState: {
     tasks: [],
-  }),
+  },
   reducers: {
+    init: (state, action) => {
+      return action.payload;
+    },
     add: (state, action) => {
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
       // doesn't actually mutate the state because it uses the Immer library,
@@ -44,7 +47,7 @@ export const taskSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { add, del } = taskSlice.actions;
+export const { add, del, init } = taskSlice.actions;
 
 export const selectTasks = state => state.task.tasks;
 

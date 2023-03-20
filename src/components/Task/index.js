@@ -1,14 +1,20 @@
 import { View, Text, FlatList, TouchableOpacity, Alert } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 
 import styles from "./styles";
 import color from "~/contains/color";
 import { useDispatch, useSelector } from "react-redux";
-import { del, selectTasks } from "~/redux/task";
+import { del, init, selectTasks } from "~/redux/task";
+import { getObjData } from "~/utils/storage";
 
 const Task = () => {
   const data = useSelector(selectTasks);
   const dispatch = useDispatch();
+  useEffect(() => {
+    getObjData("taskState", {
+      tasks: [],
+    }).then(res => dispatch(init(res)));
+  }, []);
   function handleNumber(number, maxLength) {
     let num = number.toString();
     let max = Math.max(maxLength.toString().length, 2);
